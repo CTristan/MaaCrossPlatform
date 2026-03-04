@@ -1,0 +1,198 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:MaaGui.ViewModels"
+             xmlns:models="using:MaaGui.Models"
+             xmlns:taskviews="using:MaaGui.Views.DailyTasks.TaskViews"
+             xmlns:tasks="using:MaaGui.Configuration.Tasks"
+             mc:Ignorable="d"
+             x:Class="MaaGui.Views.DailyTasks.TaskQueueView"
+             x:DataType="vm:TaskQueueViewModel"
+             d:DesignHeight="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="TaskConfigTemplate" DataType="tasks:BaseTask">
+            <ContentControl Content="{Binding}">
+                <ContentControl.DataTemplates>
+                    <DataTemplate DataType="tasks:StartUpTask">
+                        <taskviews:StartUpTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:FightTask">
+                        <taskviews:FightTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:InfrastTask">
+                        <taskviews:InfrastTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:MallTask">
+                        <taskviews:MallTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:RecruitTask">
+                        <taskviews:RecruitTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:AwardTask">
+                        <taskviews:AwardTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:RoguelikeTask">
+                        <taskviews:RoguelikeTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:ReclamationTask">
+                        <taskviews:ReclamationTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:CopilotTask">
+                        <taskviews:CopilotTaskView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="tasks:BaseTask">
+                        <TextBlock Text="No specific settings for this task." Margin="8" FontStyle="Italic"/>
+                    </DataTemplate>
+                </ContentControl.DataTemplates>
+            </ContentControl>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock.level">
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlPageTextForegroundBrush}" />
+        </Style>
+        <Style Selector="TextBlock.level.Warning">
+            <Setter Property="Foreground" Value="{DynamicResource SystemCautionTextColorBrush}" />
+        </Style>
+        <Style Selector="TextBlock.level.Error">
+            <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCautionBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header with controls -->
+        <Border Grid.Row="0" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="12">
+            <StackPanel Spacing="8">
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                    <TextBlock Grid.Column="0"
+                               Text="Daily Tasks"
+                               FontSize="18"
+                               FontWeight="SemiBold"/>
+
+                    <Button Grid.Column="1"
+                            Content="Connect"
+                            Command="{Binding ConnectCommand}"
+                            IsEnabled="{Binding !Connected}"
+                            MinWidth="80"
+                            Margin="0,0,8,0">
+                    </Button>
+
+                    <Button Grid.Column="2"
+                            Content="Start"
+                            Command="{Binding StartCommand}"
+                            IsEnabled="{Binding !Running}"
+                            MinWidth="80"
+                            Classes="accent"
+                            Margin="0,0,8,0">
+                    </Button>
+
+                    <Button Grid.Column="3"
+                            Content="Stop"
+                            Command="{Binding StopCommand}"
+                            IsEnabled="{Binding Running}"
+                            MinWidth="80"
+                            Margin="0,0,8,0">
+                    </Button>
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto,Auto,Auto" Margin="0,8,0,0">
+                    <Button Grid.Column="0"
+                            Content="Select All"
+                            Command="{Binding SelectAllCommand}"
+                            MinWidth="80"
+                            Margin="0,0,4,0"/>
+                    <Button Grid.Column="1"
+                            Content="Deselect All"
+                            Command="{Binding DeselectAllCommand}"
+                            MinWidth="80"
+                            Margin="0,0,4,0"/>
+                </Grid>
+
+                <!-- Stage Tips Display -->
+                <Border Background="{DynamicResource InfoBarInfoSeverityBackgroundBrush}"
+                        IsVisible="{Binding StageTips, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                        Padding="8"
+                        Margin="0,8,0,0"
+                        CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="{Binding StageTips}"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Task list -->
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding TaskItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:TaskItemViewModel">
+                        <Border BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                Margin="4"
+                                Padding="8"
+                                CornerRadius="4"
+                                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+
+                            <Grid RowDefinitions="Auto,Auto">
+                                <!-- Task header -->
+                                <Border Grid.Row="0"
+                                        Background="{DynamicResource LayerFillColorDefaultBrush}"
+                                        Padding="8,6"
+                                        CornerRadius="3,3,0,0"
+                                        IsHitTestVisible="True">
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding IsEnabled}"
+                                                  Margin="0,0,8,0"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding Name}"
+                                                   FontSize="14"
+                                                   FontWeight="Medium"
+                                                   VerticalAlignment="Center"/>
+                                        <ToggleButton Grid.Column="2"
+                                                IsChecked="{Binding IsExpanded}"
+                                                Content="⚙"
+                                                FontSize="16"
+                                                Padding="8"
+                                                Margin="8,0,0,0"
+                                                ToolTip.Tip="Task Settings"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Settings panel (expandable) -->
+                                <Expander Grid.Row="1"
+                                          IsExpanded="{Binding IsExpanded}"
+                                          IsVisible="{Binding IsExpanded}"
+                                          ExpandDirection="Down">
+                                    <Expander.Header>
+                                        <TextBlock Text="Configure task settings..."
+                                                   FontSize="12"
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                    </Expander.Header>
+
+                                    <StackPanel Margin="0,8,0,0" Spacing="8">
+                                        <Border BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                                BorderThickness="1"
+                                                Padding="4"
+                                                CornerRadius="4">
+                                            <ContentControl Content="{Binding TaskConfig}" 
+                                                           ContentTemplate="{StaticResource TaskConfigTemplate}"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Expander>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

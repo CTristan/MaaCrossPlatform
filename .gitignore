@@ -481,3 +481,5 @@ install
 
 # CMake user presets
 CMakeUserPresets.json
+
+.fix-die-repeat/

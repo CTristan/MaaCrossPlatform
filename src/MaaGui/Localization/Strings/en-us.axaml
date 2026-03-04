@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- Common -->
+    <sys:String x:Key="Title">MaaAssistantArknights</sys:String>
+    <sys:String x:Key="OK">OK</sys:String>
+    <sys:String x:Key="Cancel">Cancel</sys:String>
+    <sys:String x:Key="Apply">Apply</sys:String>
+    <sys:String x:Key="Save">Save</sys:String>
+
+    <!-- Task Queue -->
+    <sys:String x:Key="TaskQueue">Task Queue</sys:String>
+    <sys:String x:Key="StartTask">Start Task: </sys:String>
+    <sys:String x:Key="CompleteTask">Complete Task: </sys:String>
+    <sys:String x:Key="TaskError">Task Error</sys:String>
+
+    <!-- Connection -->
+    <sys:String x:Key="Connect">Connect</sys:String>
+    <sys:String x:Key="Disconnect">Disconnect</sys:String>
+    <sys:String x:Key="Connected">Connected</sys:String>
+    <sys:String x:Key="Disconnected">Disconnected</sys:String>
+    <sys:String x:Key="Connecting">Connecting...</sys:String>
+
+    <!-- Settings -->
+    <sys:String x:Key="Settings">Settings</sys:String>
+    <sys:String x:Key="Language">Language</sys:String>
+    <sys:String x:Key="Theme">Theme</sys:String>
+    <sys:String x:Key="TouchMode">Touch Mode</sys:String>
+    <sys:String x:Key="ClientType">Client Type</sys:String>
+
+    <!-- Copilot -->
+    <sys:String x:Key="Copilot">Copilot</sys:String>
+    <sys:String x:Key="LoadFile">Load File</sys:String>
+    <sys:String x:Key="Run">Run</sys:String>
+
+    <!-- Utilities -->
+    <sys:String x:Key="Utilities">Utilities</sys:String>
+    <sys:String x:Key="Recruit">Recruit</sys:String>
+    <sys:String x:Key="Depot">Depot</sys:String>
+    <sys:String x:Key="OperBox">Operator Box</sys:String>
+    <sys:String x:Key="VideoRecognition">Video Recognition</sys:String>
+    <sys:String x:Key="Gacha">Gacha</sys:String>
+    <sys:String x:Key="MiniGame">Mini-Game</sys:String>
+</ResourceDictionary>

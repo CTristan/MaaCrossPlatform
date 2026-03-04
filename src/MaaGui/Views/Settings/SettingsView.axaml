@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:MaaGui.ViewModels.Settings"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+             x:Class="MaaGui.Views.Settings.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="12">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Settings" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <Button Content="Save" Classes="accent" Command="{Binding SaveCommand}" Margin="12,0,0,0"/>
+                <Button Content="Update Web Data" Command="{Binding UpdateDataCommand}" Margin="12,0,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Padding="12">
+            <StackPanel Spacing="16">
+                <!-- Connection Settings -->
+                <HeaderedContentControl Header="Connection Settings">
+                    <StackPanel Spacing="12" Margin="0,8,0,0">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Grid.Column="0" Text="ADB Path" VerticalAlignment="Center" Margin="0,0,12,0" Width="80"/>
+                            <TextBox Grid.Column="1" Text="{Binding AdbPath}" Watermark="C:\path\to\adb.exe"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Grid.Column="0" Text="ADB Address" VerticalAlignment="Center" Margin="0,0,12,0" Width="80"/>
+                            <TextBox Grid.Column="1" Text="{Binding Address}" Watermark="127.0.0.1:5555"/>
+                        </Grid>
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <!-- Game Settings -->
+                <HeaderedContentControl Header="Game Settings">
+                    <StackPanel Spacing="12" Margin="0,8,0,0">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Grid.Column="0" Text="Client Type" VerticalAlignment="Center" Margin="0,0,12,0" Width="80"/>
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding ClientTypes}" SelectedItem="{Binding ClientType}" HorizontalAlignment="Stretch"/>
+                        </Grid>
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <!-- System Settings -->
+                <HeaderedContentControl Header="System Settings">
+                    <StackPanel Spacing="12" Margin="0,8,0,0">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Grid.Column="0" Text="Language" VerticalAlignment="Center" Margin="0,0,12,0" Width="80"/>
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding Languages}" SelectedItem="{Binding Language}" HorizontalAlignment="Stretch"/>
+                        </Grid>
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

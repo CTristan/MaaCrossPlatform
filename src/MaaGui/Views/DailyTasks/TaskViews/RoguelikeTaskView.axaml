@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tasks="using:MaaGui.Configuration.Tasks"
+             xmlns:enums="using:MaaGui.Constants.Enums"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="400"
+             x:Class="MaaGui.Views.DailyTasks.TaskViews.RoguelikeTaskView"
+             x:DataType="tasks:RoguelikeTask">
+    <StackPanel Spacing="12" Margin="8">
+        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Theme" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <ComboBox Grid.Column="1" Grid.Row="0" SelectedIndex="{Binding Theme}" Width="150">
+                <ComboBoxItem Content="Phantom"/>
+                <ComboBoxItem Content="Mizuki"/>
+                <ComboBoxItem Content="Sami"/>
+                <ComboBoxItem Content="Sarkaz"/>
+                <ComboBoxItem Content="JieGarden"/>
+            </ComboBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Mode" VerticalAlignment="Center" Margin="0,12,12,0"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" SelectedIndex="{Binding Mode}" Width="150" Margin="0,12,0,0">
+                <ComboBoxItem Content="Exp"/>
+                <ComboBoxItem Content="Investment"/>
+                <ComboBoxItem Content="Collectible"/>
+                <ComboBoxItem Content="CLP_PDS"/>
+                <ComboBoxItem Content="Squad"/>
+                <ComboBoxItem Content="Exploration"/>
+            </ComboBox>
+        </Grid>
+
+        <StackPanel Spacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Max Starts:" VerticalAlignment="Center"/>
+                <NumericUpDown Value="{Binding StartCount}" Minimum="1" Maximum="999999" Width="150"/>
+            </StackPanel>
+            
+            <CheckBox Content="Enable Investment" IsChecked="{Binding Investment}"/>
+            <StackPanel Orientation="Horizontal" Spacing="8" IsEnabled="{Binding Investment}">
+                <TextBlock Text="Invest Max:" VerticalAlignment="Center"/>
+                <NumericUpDown Value="{Binding InvestCount}" Minimum="1" Maximum="999" Width="120"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

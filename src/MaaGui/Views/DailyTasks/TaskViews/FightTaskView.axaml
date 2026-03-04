@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tasks="using:MaaGui.Configuration.Tasks"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="400"
+             x:Class="MaaGui.Views.DailyTasks.TaskViews.FightTaskView"
+             x:DataType="tasks:FightTask">
+    <StackPanel Spacing="8" Margin="8">
+        <!-- Sanity Medicine -->
+        <HeaderedContentControl Header="Sanity Recovery">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <CheckBox Content="Use Sanity Medicine" IsChecked="{Binding UseMedicine}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" IsEnabled="{Binding UseMedicine}">
+                    <TextBlock Text="Max count:" VerticalAlignment="Center"/>
+                    <NumericUpDown Value="{Binding MedicineCount}" Minimum="0" Maximum="999" Width="120"/>
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <!-- Originium Stone -->
+        <HeaderedContentControl Header="Originium Stone">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <CheckBox Content="Use Originium Stone" IsChecked="{Binding UseStone}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" IsEnabled="{Binding UseStone}">
+                    <TextBlock Text="Max count:" VerticalAlignment="Center"/>
+                    <NumericUpDown Value="{Binding StoneCount}" Minimum="0" Maximum="999" Width="120"/>
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <!-- Times Limit -->
+        <HeaderedContentControl Header="Execution Limit">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <CheckBox Content="Enable Limit" IsChecked="{Binding EnableTimesLimit}"/>
+                <StackPanel Orientation="Horizontal" Spacing="8" IsEnabled="{Binding EnableTimesLimit}">
+                    <TextBlock Text="Max battles:" VerticalAlignment="Center"/>
+                    <NumericUpDown Value="{Binding TimesLimit}" Minimum="1" Maximum="99999" Width="120"/>
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <!-- Custom Annihilation -->
+        <HeaderedContentControl Header="Annihilation">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <CheckBox Content="Custom Annihilation" IsChecked="{Binding UseCustomAnnihilation}"/>
+                <TextBox Text="{Binding AnnihilationStage}" IsEnabled="{Binding UseCustomAnnihilation}" Width="150" Watermark="Stage ID"/>
+            </StackPanel>
+        </HeaderedContentControl>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:MaaGui.ViewModels.Copilot"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+             x:Class="MaaGui.Views.Copilot.CopilotView"
+             x:DataType="vm:CopilotViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="12">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Copilot" FontSize="18" FontWeight="SemiBold"/>
+                <Grid ColumnDefinitions="*,Auto,Auto">
+                    <TextBox Grid.Column="0" Text="{Binding Filename}" Watermark="Select Copilot JSON file..." VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <Button Grid.Column="1" Content="Browse..." Command="{Binding SelectFileCommand}" Margin="0,0,8,0"/>
+                    <Button Grid.Column="2" Content="Run" Classes="accent" Command="{Binding RunCommand}" IsEnabled="{Binding !Running}"/>
+                </Grid>
+                <Button Content="Stop" Command="{Binding StopCommand}" IsVisible="{Binding Running}" HorizontalAlignment="Stretch" Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Padding="12">
+            <TextBlock Text="Copilot allows you to run custom automation tasks by providing a JSON file containing the task definition."
+                       TextWrapping="Wrap" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

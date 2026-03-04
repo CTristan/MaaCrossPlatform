@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tasks="using:MaaGui.Configuration.Tasks"
+             xmlns:enums="using:MaaGui.Constants.Enums"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="400"
+             x:Class="MaaGui.Views.DailyTasks.TaskViews.InfrastTaskView"
+             x:DataType="tasks:InfrastTask">
+    <StackPanel Spacing="12" Margin="8">
+        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Mode" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <ComboBox Grid.Column="1" Grid.Row="0" SelectedIndex="{Binding Mode}" Width="150">
+                <ComboBoxItem Content="Normal"/>
+                <ComboBoxItem Content="Custom"/>
+            </ComboBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Drones" VerticalAlignment="Center" Margin="0,12,12,0"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" SelectedValue="{Binding UsesOfDrones}" Width="150" Margin="0,12,0,0">
+                <ComboBoxItem Content="Money" Tag="Money"/>
+                <ComboBoxItem Content="Synthetic" Tag="Synthetic"/>
+                <ComboBoxItem Content="EXP" Tag="EXP"/>
+            </ComboBox>
+        </Grid>
+
+        <StackPanel Spacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Dormitory Threshold:" VerticalAlignment="Center"/>
+                <NumericUpDown Value="{Binding DormThreshold}" Minimum="0" Maximum="100" Width="120"/>
+            </StackPanel>
+            
+            <CheckBox Content="Enable Dorm Trust" IsChecked="{Binding DormTrustEnabled}"/>
+            <CheckBox Content="Auto Replenish Shards" IsChecked="{Binding OriginiumShardAutoReplenishment}"/>
+            <CheckBox Content="Reception Message Board" IsChecked="{Binding ReceptionMessageBoard}"/>
+            <CheckBox Content="Reception Clue Exchange" IsChecked="{Binding ReceptionClueExchange}"/>
+            <CheckBox Content="Send Clue" IsChecked="{Binding SendClue}"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

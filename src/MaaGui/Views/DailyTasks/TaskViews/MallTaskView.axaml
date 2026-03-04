@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tasks="using:MaaGui.Configuration.Tasks"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+             x:Class="MaaGui.Views.DailyTasks.TaskViews.MallTaskView"
+             x:DataType="tasks:MallTask">
+    <StackPanel Spacing="12" Margin="8">
+        <CheckBox Content="Credit Shopping" IsChecked="{Binding Shopping}"/>
+        <CheckBox Content="Visit Friends" IsChecked="{Binding VisitFriends}"/>
+        <CheckBox Content="Only Buy Discounts" IsChecked="{Binding OnlyBuyDiscount}"/>
+        <CheckBox Content="Reserve Max Credit" IsChecked="{Binding ReserveMaxCredit}"/>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tasks="using:MaaGui.Configuration.Tasks"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+             x:Class="MaaGui.Views.DailyTasks.TaskViews.ReclamationTaskView"
+             x:DataType="tasks:ReclamationTask">
+    <StackPanel Spacing="12" Margin="8">
+        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Theme" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <ComboBox Grid.Column="1" Grid.Row="0" SelectedIndex="{Binding Theme}" Width="150">
+                <ComboBoxItem Content="Fire"/>
+                <ComboBoxItem Content="Tales"/>
+            </ComboBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Mode" VerticalAlignment="Center" Margin="0,12,12,0"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" SelectedIndex="{Binding Mode}" Width="150" Margin="0,12,0,0">
+                <ComboBoxItem Content="No Archive"/>
+                <ComboBoxItem Content="Archive"/>
+            </ComboBox>
+        </Grid>
+    </StackPanel>
+</UserControl>

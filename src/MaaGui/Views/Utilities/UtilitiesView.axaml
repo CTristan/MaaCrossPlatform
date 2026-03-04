@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:MaaGui.ViewModels.Utilities"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+             x:Class="MaaGui.Views.Utilities.UtilitiesView"
+             x:DataType="vm:UtilitiesViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="12">
+            <TextBlock Text="Utilities" FontSize="18" FontWeight="SemiBold"/>
+        </Border>
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Utilities}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:UtilityItem">
+                        <Border BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                Margin="8"
+                                Padding="12"
+                                CornerRadius="4"
+                                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Spacing="4">
+                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Medium"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="Run" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:UtilitiesViewModel)DataContext).RunUtilityCommand}" CommandParameter="{Binding}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- Common -->
+    <sys:String x:Key="Title">明日方舟助手</sys:String>
+    <sys:String x:Key="OK">确定</sys:String>
+    <sys:String x:Key="Cancel">取消</sys:String>
+    <sys:String x:Key="Apply">应用</sys:String>
+    <sys:String x:Key="Save">保存</sys:String>
+
+    <!-- Task Queue -->
+    <sys:String x:Key="TaskQueue">任务队列</sys:String>
+    <sys:String x:Key="StartTask">开始任务：</sys:String>
+    <sys:String x:Key="CompleteTask">完成任务：</sys:String>
+    <sys:String x:Key="TaskError">任务出错</sys:String>
+
+    <!-- Connection -->
+    <sys:String x:Key="Connect">连接</sys:String>
+    <sys:String x:Key="Disconnect">断开</sys:String>
+    <sys:String x:Key="Connected">已连接</sys:String>
+    <sys:String x:Key="Disconnected">已断开</sys:String>
+    <sys:String x:Key="Connecting">连接中...</sys:String>
+
+    <!-- Settings -->
+    <sys:String x:Key="Settings">设置</sys:String>
+    <sys:String x:Key="Language">语言</sys:String>
+    <sys:String x:Key="Theme">主题</sys:String>
+    <sys:String x:Key="TouchMode">触控模式</sys:String>
+    <sys:String x:Key="ClientType">客户端类型</sys:String>
+
+    <!-- Copilot -->
+    <sys:String x:Key="Copilot">作业</sys:String>
+    <sys:String x:Key="LoadFile">加载文件</sys:String>
+    <sys:String x:Key="Run">运行</sys:String>
+
+    <!-- Utilities -->
+    <sys:String x:Key="Utilities">小工具</sys:String>
+    <sys:String x:Key="Recruit">公开招募</sys:String>
+    <sys:String x:Key="Depot">仓库识别</sys:String>
+    <sys:String x:Key="OperBox">干员识别</sys:String>
+    <sys:String x:Key="VideoRecognition">视频识别</sys:String>
+    <sys:String x:Key="Gacha">抽卡记录</sys:String>
+    <sys:String x:Key="MiniGame">刷理智小样</sys:String>
+</ResourceDictionary>

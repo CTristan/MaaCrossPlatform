@@ -1,0 +1,95 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:viewmodels="using:MaaGui.ViewModels"
+        xmlns:views="using:MaaGui.Views"
+        xmlns:viewsDaily="using:MaaGui.Views.DailyTasks"
+        xmlns:viewsCopilot="using:MaaGui.Views.Copilot"
+        xmlns:viewsUtilities="using:MaaGui.Views.Utilities"
+        xmlns:viewsSettings="using:MaaGui.Views.Settings"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+        x:Class="MaaGui.Views.MainWindow"
+        x:DataType="viewmodels:MainViewModel"
+        Title="{Binding Title}"
+        Width="1200" Height="800"
+        MinWidth="800" MinHeight="600">
+
+    <Design.DataContext>
+        <viewmodels:MainViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Main Navigation View -->
+        <ui:NavigationView Grid.Row="1" x:Name="MainNavigationView"
+                        IsBackEnabled="False"
+                        IsSettingsVisible="True"
+                        PaneDisplayMode="Left">
+
+            <!-- Daily Tasks Section -->
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="Daily Tasks" Tag="DailyTasks">
+                    <ui:NavigationViewItem.IconSource>
+                        <ui:SymbolIconSource Symbol="Calendar" />
+                    </ui:NavigationViewItem.IconSource>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Copilot" Tag="Copilot">
+                    <ui:NavigationViewItem.IconSource>
+                        <ui:SymbolIconSource Symbol="Video" />
+                    </ui:NavigationViewItem.IconSource>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Utilities" Tag="Utilities">
+                    <ui:NavigationViewItem.IconSource>
+                        <ui:SymbolIconSource Symbol="Settings" />
+                    </ui:NavigationViewItem.IconSource>
+                </ui:NavigationViewItem>
+            </ui:NavigationView.MenuItems>
+
+            <!-- Content Frame -->
+            <ui:NavigationView.Content>
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <!-- Daily Tasks Page -->
+                        <viewsDaily:TaskQueueView DataContext="{Binding TaskQueue}"
+                                                   IsVisible="{Binding $parent[Window].((viewmodels:MainViewModel)DataContext).SelectedTab, Converter={StaticResource ObjectEqualConverter}, ConverterParameter=DailyTasks}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   Margin="12"/>
+
+                        <!-- Copilot Page -->
+                        <viewsCopilot:CopilotView DataContext="{Binding Copilot}"
+                                                   IsVisible="{Binding $parent[Window].((viewmodels:MainViewModel)DataContext).SelectedTab, Converter={StaticResource ObjectEqualConverter}, ConverterParameter=Copilot}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   Margin="12"/>
+
+                        <!-- Utilities Page -->
+                        <viewsUtilities:UtilitiesView DataContext="{Binding Utilities}"
+                                                   IsVisible="{Binding $parent[Window].((viewmodels:MainViewModel)DataContext).SelectedTab, Converter={StaticResource ObjectEqualConverter}, ConverterParameter=Utilities}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   Margin="12"/>
+
+                        <!-- Settings Page -->
+                        <viewsSettings:SettingsView DataContext="{Binding Settings}"
+                                                   IsVisible="{Binding $parent[Window].((viewmodels:MainViewModel)DataContext).SelectedTab, Converter={StaticResource ObjectEqualConverter}, ConverterParameter=Settings}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   Margin="12"/>
+                    </Grid>
+                </ScrollViewer>
+            </ui:NavigationView.Content>
+
+            <!-- Footer Status -->
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem Content="{Binding ConnectionStatus}"
+                                   IsEnabled="False">
+                    <ui:NavigationViewItem.IconSource>
+                        <ui:SymbolIconSource Symbol="Link" />
+                    </ui:NavigationViewItem.IconSource>
+                </ui:NavigationViewItem>
+            </ui:NavigationView.FooterMenuItems>
+        </ui:NavigationView>
+    </Grid>
+</Window>
