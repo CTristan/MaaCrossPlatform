@@ -1,0 +1,65 @@
+<Project>
+  <PropertyGroup>
+    <MaaRepoRootDir Condition="'$(SolutionDir)' != ''">$([MSBuild]::EnsureTrailingSlash('$(SolutionDir)'))</MaaRepoRootDir>
+    <MaaRepoRootDir Condition="'$(MaaRepoRootDir)' == ''">$([MSBuild]::EnsureTrailingSlash($([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..'))))</MaaRepoRootDir>
+    <MaaCoreInstallDir Condition="'$(MaaCoreInstallDir)' == ''">$(MaaRepoRootDir)install</MaaCoreInstallDir>
+    <MaaResourceDir Condition="'$(MaaResourceDir)' == ''">$(MaaRepoRootDir)resource</MaaResourceDir>
+
+    <IsWindows>$([MSBuild]::IsOSPlatform('Windows'))</IsWindows>
+    <IsMacOS>$([MSBuild]::IsOSPlatform('OSX'))</IsMacOS>
+    <IsLinux>$([MSBuild]::IsOSPlatform('Linux'))</IsLinux>
+
+    <MaaCorePrimaryLibName Condition="'$(IsWindows)' == 'true'">MaaCore.dll</MaaCorePrimaryLibName>
+    <MaaCorePrimaryLibName Condition="'$(IsMacOS)' == 'true'">libMaaCore.dylib</MaaCorePrimaryLibName>
+    <MaaCorePrimaryLibName Condition="'$(MaaCorePrimaryLibName)' == ''">libMaaCore.so</MaaCorePrimaryLibName>
+    <MaaCorePrimaryLibPath>$([System.IO.Path]::Combine('$(MaaCoreInstallDir)', '$(MaaCorePrimaryLibName)'))</MaaCorePrimaryLibPath>
+  </PropertyGroup>
+
+  <Target Name="ValidateMaaCoreLibs" BeforeTargets="PrepareForBuild" Condition="'$(DesignTimeBuild)' != 'true'">
+    <Error Condition="!Exists('$(MaaCoreInstallDir)')"
+           Text="MaaCore native libraries not found in '$(MaaCoreInstallDir)'. Build MaaCore first via CMake (see README)." />
+    <Error Condition="!Exists('$(MaaCorePrimaryLibPath)')"
+           Text="MaaCore native libraries not found in '$(MaaCoreInstallDir)'. Expected '$(MaaCorePrimaryLibName)'. Build MaaCore first via CMake (see README)." />
+    <Error Condition="!Exists('$(MaaResourceDir)')"
+           Text="MaaCore resources not found in '$(MaaResourceDir)'." />
+  </Target>
+
+  <Target Name="CopyMaaCoreNativeLibs" AfterTargets="Build" DependsOnTargets="ValidateMaaCoreLibs" Condition="'$(DesignTimeBuild)' != 'true'">
+    <ItemGroup Condition="'$(IsMacOS)' == 'true'">
+      <MaaCoreNativeLibs Include="$(MaaCoreInstallDir)/*.dylib" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(IsLinux)' == 'true'">
+      <MaaCoreNativeLibs Include="$(MaaCoreInstallDir)/*.so*" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(IsWindows)' == 'true'">
+      <MaaCoreNativeLibs Include="$(MaaCoreInstallDir)/*.dll" />
+    </ItemGroup>
+
+    <Error Condition="'@(MaaCoreNativeLibs)' == ''"
+           Text="No MaaCore native libraries matching current platform were found in '$(MaaCoreInstallDir)'." />
+
+    <Copy SourceFiles="@(MaaCoreNativeLibs)"
+          DestinationFolder="$(TargetDir)"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="LinkMaaCoreResources" AfterTargets="Build" DependsOnTargets="ValidateMaaCoreLibs" Condition="'$(DesignTimeBuild)' != 'true'">
+    <PropertyGroup>
+      <MaaOutputResourcePath>$([System.IO.Path]::Combine('$(TargetDir)', 'resource'))</MaaOutputResourcePath>
+    </PropertyGroup>
+
+    <Exec Condition="'$(IsWindows)' != 'true'"
+          Command="if [ -e &quot;$(MaaOutputResourcePath)&quot; ] &amp;&amp; [ ! -L &quot;$(MaaOutputResourcePath)&quot; ]; then rm -rf &quot;$(MaaOutputResourcePath)&quot;; fi; ln -sfn &quot;$(MaaResourceDir)&quot; &quot;$(MaaOutputResourcePath)&quot;" />
+
+    <ItemGroup Condition="'$(IsWindows)' == 'true'">
+      <MaaCoreResources Include="$(MaaResourceDir)\**\*" />
+    </ItemGroup>
+
+    <MakeDir Condition="'$(IsWindows)' == 'true'" Directories="$(MaaOutputResourcePath)" />
+
+    <Copy Condition="'$(IsWindows)' == 'true'"
+          SourceFiles="@(MaaCoreResources)"
+          DestinationFiles="@(MaaCoreResources->'$(MaaOutputResourcePath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>
