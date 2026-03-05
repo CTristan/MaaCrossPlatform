@@ -77,6 +77,27 @@ public partial class MaaService : IMaaService, IDisposable
         }
     }
 
+    private static DllNotFoundException CreateMaaCoreLoadException(string configuredLibraryPath, string platformLibraryName, bool configuredPathExists, Exception innerException)
+    {
+        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var outputLibraryPath = Path.Combine(baseDirectory, platformLibraryName);
+        var resourcePath = Path.Combine(baseDirectory, "resource");
+
+        var configuredPathDescription = configuredPathExists
+            ? $"Found '{configuredLibraryPath}', but loading it failed (usually because a transitive native dependency is missing)."
+            : $"No MaaCore native library file exists at '{configuredLibraryPath}'.";
+
+        var message =
+            $"Failed to load MaaCore native library '{platformLibraryName}'. " +
+            configuredPathDescription + " " +
+            $"Searched '{configuredLibraryPath}', '{outputLibraryPath}', and the default OS native library paths. " +
+            "Build MaaCore first via CMake install (for example: 'cmake --install build' to populate the repo 'install' directory), then rebuild MaaGui so the native libraries are copied to the output directory. " +
+            $"Also ensure MaaCore resources are available at '{resourcePath}'. " +
+            $"Original loader error: {innerException.Message}";
+
+        return new DllNotFoundException(message, innerException);
+    }
+
     [LibraryImport("MaaCore", StringMarshalling = StringMarshalling.Utf8)]
     [return: MarshalAs(UnmanagedType.U1)]
     public static partial bool AsstSetUserDir(string path);
