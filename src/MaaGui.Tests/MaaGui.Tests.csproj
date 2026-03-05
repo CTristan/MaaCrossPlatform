@@ -24,4 +24,5 @@
     <ProjectReference Include="..\MaaGui\MaaGui.csproj" />
   </ItemGroup>
 
+  <Import Project="..\MaaGui\MaaCoreRuntimeArtifacts.targets" />
 </Project>
