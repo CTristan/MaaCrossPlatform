@@ -34,16 +34,31 @@ public partial class MaaService : IMaaService, IDisposable
         }
 
         var libPath = _platformServices.GetNativeLibraryPath();
-        if (File.Exists(libPath))
+        var platformLibName = GetPlatformLibName();
+        var hasPlatformSpecificLibraryPath = File.Exists(libPath);
+
+        if (hasPlatformSpecificLibraryPath)
         {
-            _libraryHandle = NativeLibrary.Load(libPath);
-            return _libraryHandle;
+            try
+            {
+                _libraryHandle = NativeLibrary.Load(libPath);
+                return _libraryHandle;
+            }
+            catch (Exception ex) when (ex is DllNotFoundException or BadImageFormatException)
+            {
+                throw CreateMaaCoreLoadException(libPath, platformLibName, hasPlatformSpecificLibraryPath, ex);
+            }
         }
 
-        // Try default library name for each platform
-        var platformLibName = GetPlatformLibName();
-        _libraryHandle = NativeLibrary.Load(platformLibName);
-        return _libraryHandle;
+        try
+        {
+            _libraryHandle = NativeLibrary.Load(platformLibName);
+            return _libraryHandle;
+        }
+        catch (Exception ex) when (ex is DllNotFoundException or BadImageFormatException)
+        {
+            throw CreateMaaCoreLoadException(libPath, platformLibName, hasPlatformSpecificLibraryPath, ex);
+        }
     }
 
     private string GetPlatformLibName()
